@@ -1,5 +1,21 @@
 
+def get_int():
+    """Gets a strin from keyboard and returns it in int if it is a number."""
+    string = input("Enter an integer: ")
+    if string.isnumeric():
+        return int(string)
+    else:
+        return get_int()
+    
+def int_to_ascii(input):
+    """Turns a list of int into a string."""
+    result = ""
+    for i in range(len(input)):
+        result += chr(input[i])
+    return result
+
 def interpret(input):
+    """Turns Brainfuck code into a list of ints."""
     i = 0
     j = 0
     k = 0
@@ -24,16 +40,16 @@ def interpret(input):
                 i += 1
         elif input[i] == "]" and not output[j] == 0:
             while i in range(len(input)) and not input[i] == "[":
-                i -= 1 
+                i -= 1
         elif input[i] == ".":
             result.append(output[j])
         elif input[i] == ",":
-            output[j] = input("Enter an integer: ")
+            output[j] = get_int()
         else:
             pass
         i += 1
     return result
 
 if __name__ == "__main__":
-    print(interpret("++++++++++[>+++++++>++++++++++>+++++++++++>+++>+<<<<<-]>++.>>+.---.<---.>>++.<+.++++++++.-------.<+++.>+.>+.>."))
+    print(int_to_ascii(interpret("++++++++++[>+++++++>++++++++++>+++++++++++>+++>+<<<<<-]>++.>>+.---.<---.>>++.<+.++++++++.-------.<+++.>+.>+.>.")))
         
