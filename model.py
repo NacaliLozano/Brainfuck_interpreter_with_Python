@@ -12,7 +12,7 @@ def int_to_ascii(input):
     result = ""
     for i in range(len(input)):
         result += chr(input[i])
-    return result 
+    return result
 
 def interpret(input):
     """Turns Brainfuck code into a list of ints."""
