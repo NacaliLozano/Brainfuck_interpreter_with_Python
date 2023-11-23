@@ -24,7 +24,7 @@ def interpret(input):
                 i += 1
         elif input[i] == "]" and not output[j] == 0:
             while i in range(len(input)) and not input[i] == "[":
-                i -= 1
+                i -= 1 
         elif input[i] == ".":
             result.append(output[j])
         elif input[i] == ",":
