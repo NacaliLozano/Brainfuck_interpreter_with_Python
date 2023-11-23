@@ -7,43 +7,42 @@ def get_int():
     else:
         return get_int()
     
-def int_to_ascii(input):
+def int_to_ascii(feed):
     """Turns a list of int into a string."""
     result = ""
-    for i in range(len(input)):
-        result += chr(input[i])
+    for i in range(len(feed)):
+        result += chr(feed[i])
     return result
 
-def interpret(input):
+def interpret(feed):
     """Turns Brainfuck code into a list of ints."""
     i = 0
     j = 0
-    k = 0
     output = [0]
     result = []
-    while i in range(len(input)):
-        if input[i] == "+":
+    while i in range(len(feed)):
+        if feed[i] == "+":
             output[j] += 1
-        elif input[i] == "-":
+        elif feed[i] == "-":
             output[j] -= 1
-        elif input[i] == ">":
+        elif feed[i] == ">":
             j += 1
             if j not in range(len(output)):
                 output.append(0)
-        elif input[i] == "<":
+        elif feed[i] == "<":
             j -= 1
             if j not in range(len(output)):
                 print("Acess out of range")
                 return None
-        elif input[i] == "[" and output[j] == 0:
-            while i in range(len(input)) and not input[i] == "]":
+        elif feed[i] == "[" and output[j] == 0:
+            while i in range(len(feed)) and not feed[i] == "]":
                 i += 1
-        elif input[i] == "]" and not output[j] == 0:
-            while i in range(len(input)) and not input[i] == "[":
+        elif feed[i] == "]" and not output[j] == 0:
+            while i in range(len(feed)) and not feed[i] == "[":
                 i -= 1
-        elif input[i] == ".":
+        elif feed[i] == ".":
             result.append(output[j])
-        elif input[i] == ",":
+        elif feed[i] == ",":
             output[j] = get_int()
         else:
             pass
