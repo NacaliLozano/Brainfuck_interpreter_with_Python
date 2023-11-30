@@ -1,3 +1,4 @@
+import sys
 
 def get_int():
     """Gets a strin from keyboard and returns it in int if it is a number."""
@@ -45,10 +46,18 @@ def interpret(feed):
         elif feed[i] == ",":
             output[j] = get_int()
         else:
-            pass
+            print("Input error.")
+            return None
         i += 1
     return result
 
 if __name__ == "__main__":
-    print(int_to_ascii(interpret("++++++++++[>+++++++>++++++++++>+++++++++++>+++>+<<<<<-]>++.>>+.---.<---.>>++.<+.++++++++.-------.<+++.>+.>+.>.")))
+    
+    with open(sys.argv[1]) as f:
+        code = f.readlines()
+    for line in code:
+        print(int_to_ascii(interpret(line)))
+        
+    
+    #print(int_to_ascii(interpret("++++++++++[>+++++++>++++++++++>+++++++++++>+++>+<<<<<-]>++.>>+.---.<---.>>++.<+.++++++++.-------.<+++.>+.>+.>.")))
         
