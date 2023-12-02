@@ -2,7 +2,7 @@ import sys
 
 def get_int():
     """Gets a strin from keyboard and returns it in int if it is a number."""
-    string = input("Enter an integer: ")
+    string = input("Enter a natural number: ")
     if string.isnumeric():
         return int(string)
     else:
@@ -10,6 +10,8 @@ def get_int():
     
 def int_to_ascii(feed):
     """Turns a list of int into a string."""
+    if feed is None:
+        return None
     result = ""
     for i in range(len(feed)):
         result += chr(feed[i])
@@ -33,21 +35,27 @@ def interpret(feed):
         elif feed[i] == "<":
             j -= 1
             if j not in range(len(output)):
-                print("Acess out of range")
+                print("Memory pointer access out of range")
                 return None
         elif feed[i] == "[" and output[j] == 0:
             while i in range(len(feed)) and not feed[i] == "]":
                 i += 1
+                if i == len(feed):
+                    print("No ] detected to the right of [")
+                    return None
+                
         elif feed[i] == "]" and not output[j] == 0:
             while i in range(len(feed)) and not feed[i] == "[":
+                if i == 0:
+                    print("No [ detected to the left of ]")
+                    return None
                 i -= 1
         elif feed[i] == ".":
             result.append(output[j])
         elif feed[i] == ",":
             output[j] = get_int()
         else:
-            print("Input error.")
-            return None
+            pass
         i += 1
     return result
 
@@ -55,9 +63,19 @@ if __name__ == "__main__":
     
     with open(sys.argv[1]) as f:
         code = f.readlines()
+    br_code_string = ""
     for line in code:
-        print(int_to_ascii(interpret(line)))
-        
+        br_code_string += line
     
-    #print(int_to_ascii(interpret("++++++++++[>+++++++>++++++++++>+++++++++++>+++>+<<<<<-]>++.>>+.---.<---.>>++.<+.++++++++.-------.<+++.>+.>+.>.")))
+    int_list = interpret(br_code_string)
+    if int_list == None:
+        print("Error")
+    print(int_list)
+    string = int_to_ascii(int_list)
+    if string == None:
+        print("Error")
+    print(string)
+    
+    
+    #print(int_to_ascii(interpret(">+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+++++++..+++.[-]>++++++++[<++++>-] <.>+++++++++++[<++++++++>-]<-.--------.+++.------.--------.[-]>++++++++[<++++>- ]<+.[-]++++++++++.")))
         
