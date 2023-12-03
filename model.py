@@ -3,7 +3,7 @@ import sys
 def get_int():
     """Gets a strin from keyboard and returns it in int if it is a number."""
     string = input("Enter a natural number: ")
-    if string.isnumeric():
+    if string.isnumeric() or string.startswith("-") and string[1:].isnumeric():
         return int(string)
     else:
         return get_int()
@@ -39,11 +39,10 @@ def interpret(feed):
                 return None
         elif feed[i] == "[" and output[j] == 0:
             while i in range(len(feed)) and not feed[i] == "]":
-                i += 1
-                if i == len(feed):
+                if i == len(feed) - 1:
                     print("No ] detected to the right of [")
                     return None
-                
+                i += 1
         elif feed[i] == "]" and not output[j] == 0:
             while i in range(len(feed)) and not feed[i] == "[":
                 if i == 0:
@@ -68,14 +67,11 @@ if __name__ == "__main__":
         br_code_string += line
     
     int_list = interpret(br_code_string)
-    if int_list == None:
-        print("Error")
-    print(int_list)
+    print("int_list: " + int_list)
     string = int_to_ascii(int_list)
-    if string == None:
-        print("Error")
-    print(string)
+    print("string: " + string)
     
+
     
-    #print(int_to_ascii(interpret(">+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+++++++..+++.[-]>++++++++[<++++>-] <.>+++++++++++[<++++++++>-]<-.--------.+++.------.--------.[-]>++++++++[<++++>- ]<+.[-]++++++++++.")))
+    #print(int_to_ascii(interpret("+++++.+++++[+++++")))
         
