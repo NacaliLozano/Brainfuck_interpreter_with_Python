@@ -2,8 +2,8 @@ import sys
 
 def get_int():
     """Gets a strin from keyboard and returns it in int if it is a number."""
-    string = input("Enter a natural number: ")
-    if string.isnumeric() or string.startswith("-") and string[1:].isnumeric():
+    string = input("Enter an integer number: ")
+    if string.isnumeric() or (string.startswith("-") and string[1:].isnumeric()):
         return int(string)
     else:
         return get_int()
@@ -14,6 +14,9 @@ def int_to_ascii(feed):
         return None
     result = ""
     for i in range(len(feed)):
+        if feed[i] not in range(128):
+            print("Not a valid character")
+            return None
         result += chr(feed[i])
     return result
 
@@ -67,9 +70,16 @@ if __name__ == "__main__":
         br_code_string += line
     
     int_list = interpret(br_code_string)
-    print("int_list: " + int_list)
-    string = int_to_ascii(int_list)
-    print("string: " + string)
+    if int_list is None:
+        print("Error in int_list")
+    else:
+        print("int_list: {}".format(int_list))
+        
+    output_string = int_to_ascii(int_list)
+    if output_string is None:
+        print("Error in output_string")
+    else:
+        print("string: " + output_string)
     
 
     
